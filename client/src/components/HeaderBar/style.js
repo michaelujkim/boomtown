@@ -1,6 +1,5 @@
 const style = {
   Bluebutton: {
-    padding: "20px",
     textDecoration: "none",
     border: "10px",
     boxSizing: "border-box",
@@ -23,7 +22,6 @@ const style = {
     textAlign: "center"
   },
   Blackbutton: {
-    padding: "20px",
     textDecoration: "none",
     border: "10px",
     boxSizing: "border-box",
