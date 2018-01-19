@@ -24,6 +24,11 @@ export default class ProfileContainer extends Component {
 
         return item;
       });
+      // .filter(item => {
+      //   item.itemowner.fullname = itemsList.find(
+      //     item => item.itemowner.fullname === "Mandi Wise"
+      //   );
+      // });
 
       this.setState({ items: combined });
     });

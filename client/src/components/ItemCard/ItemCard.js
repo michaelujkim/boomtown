@@ -14,9 +14,20 @@ import moment from "moment";
 const ItemCard = ({ item }) => (
   <div>
     <Card>
-      <CardMedia overlay={<CardTitle title={item.borrower} />}>
-        <img src={item.imageurl} alt="" />
-      </CardMedia>
+      {item.borrower ? (
+        <CardMedia
+          overlay={
+            <CardTitle title={`Borrowed By ${item.borrower.fullname}`} />
+          }
+        >
+          <img src={item.imageurl} alt="" />
+        </CardMedia>
+      ) : (
+        <CardMedia>
+          <img src={item.imageurl} alt="" />
+        </CardMedia>
+      )}
+
       <CardHeader
         title={item.itemowner.fullname}
         subtitle={moment()

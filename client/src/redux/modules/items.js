@@ -24,18 +24,38 @@ const items = fetch(ITEMS_URL).then(r => r.json());
 const users = fetch(USERS_URL).then(r => r.json());
 export const fetchItemsAndUsers = () => dispatch => {
   dispatch(getItemsLoading());
-  return Promise.all([items, users])
+  return Promise.all(
+    [ITEMS_URL, USERS_URL].map(url =>
+      fetch(url).then(response => response.json())
+    )
+  )
     .then(response => {
       const [itemsList, usersList] = response;
 
       const combined = itemsList.map(item => {
-        const { fullname, email } = usersList.find(
-          user => user.id === item.itemowner
-        );
-        item.itemowner = { fullname, email };
+        item.itemowner = usersList.find(user => user.id === item.itemowner);
+        item.borrower
+          ? (item.borrower = usersList.find(user => user.id === item.borrower))
+          : "error";
+        // if (item.borrower) {
+        //   item.borrower.map(borrower => {
+        //     const { bio } = usersList.find(user => user.id === item.borrower);
+        //     item.borrower = { bio };
+        //   });
+        // }
+
+        // const { fullname, email } = usersList.find(
+        //   user => user.id === item.itemowner
+        // );
+        // item.itemowner = { fullname, email };
 
         return item;
       });
+      // .map(item => {
+      //   const { bio } = usersList.find(user => user.id === item.borrower);
+      //   item.borrower = { bio };
+      //   return item;
+      // })
       dispatch(getItems(combined));
     })
     .catch(error => dispatch(getItemsError(error)));
