@@ -1,38 +1,31 @@
 //actions
 
-const GET_ITEMS_LOADING = "GET_ITEMS_LOADING";
-const GET_ITEMS = "GET_ITEMS";
-const GET_ITEMS_ERROR = "GET_ITEMS_ERROR";
-const GET_ITEMS_FILTERED = "GET_ITEMS_FILTERED";
-
+const GET_PROFILE_LOADING = "GET_USER_LOADING";
+const GET_PROFILE = "GET_USER";
+const GET_PROFILE_ERROR = "GET_USER_ERROR";
 const ITEMS_URL = "http://localhost:4000/items";
 const USERS_URL = "http://localhost:4000/users";
 //action creators
-const getItemsLoading = () => ({
-  type: GET_ITEMS_LOADING
+const getProfileLoading = () => ({
+  type: GET_PROFILE_LOADING
 });
 
-const getItems = items => ({
-  type: GET_ITEMS,
+const getProfile = items => ({
+  type: GET_PROFILE,
   payload: items
 });
 
-const getItemsError = error => ({
-  type: GET_ITEMS_ERROR,
+const getProfileError = error => ({
+  type: GET_PROFILE_ERROR,
   payload: error
-});
-
-const getItemsFiltered = items => ({
-  type: GET_ITEMS_FILTERED,
-  payload: items
 });
 //async action creator
 const items = fetch(ITEMS_URL).then(r => r.json());
 const users = fetch(USERS_URL).then(r => r.json());
-export const fetchItemsAndUsers = () => dispatch => {
-  dispatch(getItemsLoading());
+export const fetchUsers = userid => dispatch => {
+  dispatch(getProfileLoading());
   return Promise.all(
-    [ITEMS_URL, USERS_URL].map(url =>
+    [`http://localhost:4000/items/?itemowner=${userid}`, USERS_URL].map(url =>
       fetch(url).then(response => response.json())
     )
   )
@@ -63,32 +56,30 @@ export const fetchItemsAndUsers = () => dispatch => {
       //   item.borrower = { bio };
       //   return item;
       // })
-      dispatch(getItems(combined));
+      dispatch(getProfile(combined));
     })
-    .catch(error => dispatch(getItemsError(error)));
+    .catch(error => dispatch(getProfileError(error)));
 };
 //reducer
 
 export default (
   state = {
     isLoading: false,
-    items: [],
-    error: ""
+    user: [],
+    error: "",
+    items: []
   },
   action
 ) => {
   switch (action.type) {
-    case GET_ITEMS_LOADING: {
+    case GET_PROFILE_LOADING: {
       return { ...state, isLoading: true, error: "" };
     }
-    case GET_ITEMS: {
+    case GET_PROFILE: {
       return { ...state, isLoading: false, items: action.payload, error: "" };
     }
-    case GET_ITEMS_ERROR: {
+    case GET_PROFILE_ERROR: {
       return { ...state, isLoading: false, error: action.payload };
-    }
-    case GET_ITEMS_FILTERED: {
-      return { ...state, isLoading: false, items: action.payload, error: "" };
     }
     default:
       return state;

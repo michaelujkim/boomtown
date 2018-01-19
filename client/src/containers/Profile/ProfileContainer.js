@@ -1,39 +1,22 @@
 import React, { Component } from "react";
 import Profile from "./Profile";
-const ITEMS_URL = "http://localhost:4000/items";
-const USERS_URL = "http://localhost:4000/users";
-export default class ProfileContainer extends Component {
-  constructor() {
-    super();
-    this.state = {
-      items: []
-    };
-  }
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { fetchUsers } from "../../redux/modules/profile";
+
+class ProfileContainer extends Component {
+  static propTypes = {};
   componentDidMount() {
-    const items = fetch(ITEMS_URL).then(r => r.json());
-    const users = fetch(USERS_URL).then(r => r.json());
-
-    Promise.all([items, users]).then(response => {
-      const [itemsList, usersList] = response;
-
-      const combined = itemsList.map(item => {
-        const { fullname, email } = usersList.find(
-          user => user.id === item.itemowner
-        );
-        item.itemowner = { fullname, email };
-
-        return item;
-      });
-      // .filter(item => {
-      //   item.itemowner.fullname = itemsList.find(
-      //     item => item.itemowner.fullname === "Mandi Wise"
-      //   );
-      // });
-
-      this.setState({ items: combined });
-    });
+    this.props.dispatch(fetchUsers(this.props.match.params.userid));
   }
   render() {
-    return <Profile list={this.state.items} />;
+    console.log(this.props.user);
+    return <Profile list={this.props.user} />;
   }
 }
+const mapStateToProps = state => ({
+  isLoading: state.profile.isLoading,
+  user: state.profile.items,
+  error: state.profile.error
+});
+export default connect(mapStateToProps)(ProfileContainer);

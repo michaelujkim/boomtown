@@ -11,6 +11,7 @@ import FlatButton from "material-ui/FlatButton";
 import Gravatar from "react-gravatar";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 const ItemCard = ({ item }) => (
   <div>
     <Card>
@@ -27,15 +28,15 @@ const ItemCard = ({ item }) => (
           <img src={item.imageurl} alt="" />
         </CardMedia>
       )}
-
-      <CardHeader
-        title={item.itemowner.fullname}
-        subtitle={moment()
-          .startOf("day")
-          .fromNow()}
-        avatar={<Gravatar email={item.itemowner.email} />}
-      />
-
+      <Link to={`profile/${item.itemowner.id}`}>
+        <CardHeader
+          title={item.itemowner.fullname}
+          subtitle={moment()
+            .startOf("day")
+            .fromNow()}
+          avatar={<Gravatar email={item.itemowner.email} />}
+        />
+      </Link>
       <CardTitle title={item.title} subtitle={item.tags} />
       <CardText>{item.description}</CardText>
       <CardActions>

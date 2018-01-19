@@ -29,40 +29,57 @@ const styles = {
  * This example uses an [IconButton](/#/components/icon-button) on the left, has a clickable `title`
  * through the `onClick` property, and a [FlatButton](/#/components/flat-button) on the right.
  */
-const handleChange = (event, index, value) => this.setState({ value });
-const HeaderBar = () => (
-  <AppBar
-    style={style.Header}
-    iconElementLeft={
-      <div style={style.Headerrightbuttons}>
-        <div>
-          <Link to="/">
-            <img src={Logo} />
-          </Link>
-        </div>
-        <div>
-          <DropDownMenu value={1} onChange={this.handleChange}>
-            <MenuItem value={1} primaryText="Never" />
-            <MenuItem value={2} primaryText="Every Night" />
-            <MenuItem value={3} primaryText="Weeknights" />
-            <MenuItem value={4} primaryText="Weekends" />
-            <MenuItem value={5} primaryText="Weekly" />
-          </DropDownMenu>
-        </div>
-      </div>
-    }
-    iconElementRight={
-      <div>
-        <NavLink style={style.Bluebutton} to="/profile/user:id">
-          Profile
-        </NavLink>
 
-        <NavLink style={style.Blackbutton} to="/login">
-          Login
-        </NavLink>
-      </div>
+class HeaderBar extends Component {
+  state = {
+    values: []
+  };
+  handleChange = (event, index, values) => this.setState({ values });
+
+  render() {
+    if (this.state.values === 1) {
+      console.log("it");
     }
-  />
-);
+    if (this.state.values === 2) {
+      console.log("was");
+    }
+    return (
+      <AppBar
+        style={style.Header}
+        iconElementLeft={
+          <div style={style.Headerrightbuttons}>
+            <div>
+              <Link to="/">
+                <img src={Logo} />
+              </Link>
+            </div>
+            <div>
+              <DropDownMenu value={1} onChange={this.handleChange}>
+                <MenuItem value={1} primaryText="Electronics" />
+                <MenuItem value={2} primaryText="Household Items" />
+                <MenuItem value={3} primaryText="Musical Instruments" />
+                <MenuItem value={4} primaryText="Physical Media" />
+                <MenuItem value={5} primaryText="Recreational Equipment" />
+                <MenuItem value={6} primaryText="Sporting Goods" />
+                <MenuItem value={5} primaryText="Tools" />
+              </DropDownMenu>
+            </div>
+          </div>
+        }
+        iconElementRight={
+          <div>
+            <NavLink style={style.Bluebutton} to="/profile/user:id">
+              Profile
+            </NavLink>
+
+            <NavLink style={style.Blackbutton} to="/login">
+              Login
+            </NavLink>
+          </div>
+        }
+      />
+    );
+  }
+}
 
 export default HeaderBar;
