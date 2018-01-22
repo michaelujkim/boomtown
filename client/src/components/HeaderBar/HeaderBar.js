@@ -6,6 +6,7 @@ import NavigationClose from "material-ui/svg-icons/navigation/close";
 import FlatButton from "material-ui/FlatButton";
 import Logo from "../../images/boomtown-logo.svg";
 import DropDownMenu from "material-ui/DropDownMenu";
+import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import {
   BrowserRouter as Router,
@@ -37,11 +38,10 @@ class HeaderBar extends Component {
   handleChange = (event, index, values) => this.setState({ values });
 
   render() {
+    const { values } = this.state;
     if (this.state.values === 1) {
-      console.log("it");
     }
     if (this.state.values === 2) {
-      console.log("was");
     }
     return (
       <AppBar
@@ -54,7 +54,12 @@ class HeaderBar extends Component {
               </Link>
             </div>
             <div>
-              <DropDownMenu value={1} onChange={this.handleChange}>
+              <SelectField
+                multiple={true}
+                hintText="Select a name"
+                value={values}
+                onChange={this.handleChange}
+              >
                 <MenuItem value={1} primaryText="Electronics" />
                 <MenuItem value={2} primaryText="Household Items" />
                 <MenuItem value={3} primaryText="Musical Instruments" />
@@ -62,7 +67,7 @@ class HeaderBar extends Component {
                 <MenuItem value={5} primaryText="Recreational Equipment" />
                 <MenuItem value={6} primaryText="Sporting Goods" />
                 <MenuItem value={5} primaryText="Tools" />
-              </DropDownMenu>
+              </SelectField>
             </div>
           </div>
         }
