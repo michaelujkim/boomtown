@@ -37,7 +37,7 @@ const ItemCard = ({ item }) => (
           avatar={<Gravatar email={item.itemowner.email} />}
         />
       </Link>
-      <CardTitle title={item.title} subtitle={item.tags} />
+      <CardTitle title={item.title} subtitle={`${item.tags[0].title}`} />
       <CardText>{item.description}</CardText>
       <CardActions>
         <FlatButton label="Borrow" />

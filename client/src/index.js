@@ -13,28 +13,32 @@ import Profile from "./containers/Profile";
 import Share from "./containers/Share/Share";
 import Items from "./containers/Items";
 import HeaderBar from "./components/HeaderBar";
+import { ApolloProvider } from "react-apollo";
+import client from "./config/apolloClient";
 
 const NotFound = () => <h1>Whoops. You broke the internet again.</h1>;
 const Boomtown = () => (
   <MuiThemeProvider muiTheme={muiTheme}>
-    <Provider store={store}>
-      <div>
-        <Router>
-          <div>
-            <HeaderBar />
-            <Layout>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/" component={Items} />
-                <Route exact path="/profile/:userid" component={Profile} />
-                <Route exact path="/share" component={Share} />
-                {/* <Route exact path="/404" component={NotFound} /> */}
-              </Switch>
-            </Layout>
-          </div>
-        </Router>
-      </div>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <div>
+          <Router>
+            <div>
+              <HeaderBar />
+              <Layout>
+                <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/" component={Items} />
+                  <Route exact path="/profile/:userid" component={Profile} />
+                  <Route exact path="/share" component={Share} />
+                  {/* <Route exact path="/404" component={NotFound} /> */}
+                </Switch>
+              </Layout>
+            </div>
+          </Router>
+        </div>
+      </Provider>
+    </ApolloProvider>
   </MuiThemeProvider>
 );
 

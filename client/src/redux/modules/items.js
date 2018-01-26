@@ -73,7 +73,8 @@ export default (
   state = {
     isLoading: false,
     items: [],
-    error: ""
+    error: "",
+    tags: []
   },
   action
 ) => {
