@@ -15,7 +15,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "PORT=3002 nodemon index.js"
+    "start": "PORT=3005 nodemon index.js"
   },
   "author": "",
   "license": "ISC"

@@ -36,12 +36,29 @@ const resolveFunctions = {
       const theItem = await fetch(`${ITEMS_URL}/${item.id}`).then(r =>
         r.json()
       );
-      return theItem.tags.title;
+      return theItem.tags;
     }
   },
   User: {
     shareditems(user) {
       return fetch(`${ITEMS_URL}/?itemowner=${user.id}`).then(r => r.json());
+    },
+    items: (user, args, context) => {
+      return context.loaders.UserOwnedItems.load(user.id);
+    }
+  },
+
+  Mutation: {
+    addItem(root, { newItem: { title } }) {
+      // save this new item in the database!
+      // must return new item type, thanks to our mutation schema
+      return { title };
+    },
+    updateItem(root, { currentItem: { title } }) {
+      return { title };
+    },
+    borrowItem(root, { currentItem: { title } }) {
+      return { title };
     }
   }
 };

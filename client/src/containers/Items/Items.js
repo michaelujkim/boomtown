@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import ItemCard from "../../components/ItemCard/ItemCard";
 import Masonry from "react-masonry-component";
 import styles from "./styles.js";
+
 const Items = ({ list }) => (
   <div style={styles.CardWrap}>
     <Masonry elementType={"ul"} style={styles.CardWrap}>

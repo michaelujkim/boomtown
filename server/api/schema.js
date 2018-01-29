@@ -1,6 +1,31 @@
 const { makeExecutableSchema } = require("graphql-tools");
 const resolvers = require("./resolvers"); // Next step!
 const typeDefs = `
+input TagInput{
+  id:ID
+  title: String
+}
+input AddItemInput{
+  imageurl: String
+  title: String
+  description: String
+  tags:[TagInput]
+}
+input UpdateItemInput{
+  imageurl: String
+  title: String
+  description: String
+  tags:[TagInput]
+}
+input BorrowItemInput{
+  borrower: [UserInput]
+}
+input UserInput{
+  id:ID
+  fullname: String
+}
+
+
 type Tag{
   id:ID
   title: String
@@ -23,6 +48,12 @@ type Item{
   description: String
   available: Boolean
   tags:[Tag]
+  }
+ 
+  type Mutation{
+    addItem(newItem:AddItemInput):Item
+    updateItem(currentItem:UpdateItemInput):Item
+    borrowItem(currentItem:BorrowItemInput):Item
   }
 
   type Query{
