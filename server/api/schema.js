@@ -1,6 +1,5 @@
-const { makeExecutableSchema } = require("graphql-tools");
-const resolvers = require("./resolvers"); // Next step!
-const typeDefs = `
+// Next step!
+module.exports = `
 input TagInput{
   id:ID
   title: String
@@ -36,6 +35,7 @@ type User{
   fullname: String
   shareditems: [Item]
   imageurl: String
+  items: [Item]
   
 }  
 
@@ -63,7 +63,3 @@ type Item{
     item(id:ID): Item
   }
 `;
-module.exports = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
