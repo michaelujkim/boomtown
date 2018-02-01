@@ -12,9 +12,28 @@ import Layout from "./components/Layout";
 import Profile from "./containers/Profile";
 import Share from "./containers/Share/Share";
 import Items from "./containers/Items";
-import HeaderBar from "./components/HeaderBar";
+
 import { ApolloProvider } from "react-apollo";
 import client from "./config/apolloClient";
+import PrivateRoute from "./components/PrivateRoute";
+import { firebaseAuth } from "./config/firebaseconfig";
+import { updateAuthState, userLoading } from "./redux/modules/auth";
+let gotProfile = false;
+store.subscribe(() => {
+  const values = store.getState();
+  if (!values.authenticated !== "LOADING_USER" && !gotProfile) {
+    gotProfile = true;
+    store.dispatch(userLoading(false));
+  }
+});
+firebaseAuth.onAuthStateChanged(user => {
+  console.log("checking for user");
+  if (user) {
+    store.dispatch(updateAuthState(user));
+  } else {
+    store.dispatch(updateAuthState(false));
+  }
+});
 
 const NotFound = () => <h1>Whoops. You broke the internet again.</h1>;
 const Boomtown = () => (
@@ -24,14 +43,20 @@ const Boomtown = () => (
         <div>
           <Router>
             <div>
-              <HeaderBar />
               <Layout>
                 <Switch>
+                  <Route exact path="/" component={Login} />
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/" component={Items} />
-                  <Route exact path="/profile/:userid" component={Profile} />
-                  <Route exact path="/share" component={Share} />
-                  {/* <Route exact path="/404" component={NotFound} /> */}
+
+                  <PrivateRoute exact path="/items" component={Items} />
+
+                  <PrivateRoute
+                    exact
+                    path="/profile/:userid"
+                    component={Profile}
+                  />
+                  <PrivateRoute exact path="/share" component={Share} />
+                  <Route exact path="/404" component={NotFound} />
                 </Switch>
               </Layout>
             </div>
