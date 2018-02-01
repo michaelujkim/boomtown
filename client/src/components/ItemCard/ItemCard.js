@@ -28,7 +28,7 @@ const ItemCard = ({ item }) => (
           <img src={item.imageurl} alt="" />
         </CardMedia>
       )}
-      <Link to={`profile/${item.itemowner.id}`}>
+      <Link to={`/profile/${item.itemowner.id}`}>
         <CardHeader
           title={item.itemowner.fullname}
           subtitle={moment()

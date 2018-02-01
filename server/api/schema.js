@@ -31,6 +31,7 @@ type Tag{
 }
 type User{
   id: ID
+  bio: String
   email: String
   fullname: String
   shareditems: [Item]

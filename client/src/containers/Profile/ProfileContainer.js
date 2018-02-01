@@ -3,20 +3,57 @@ import Profile from "./Profile";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUsers } from "../../redux/modules/profile";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
 
 class ProfileContainer extends Component {
   static propTypes = {};
-  componentDidMount() {
-    this.props.dispatch(fetchUsers(this.props.match.params.userid));
-  }
+  // componentDidMount() {
+  //   this.props.dispatch(fetchUsers(this.props.match.params.userid));
+  // }
   render() {
-    console.log(this.props.user);
-    return <Profile list={this.props.user} />;
+    const { loading, user } = this.props.data;
+    console.log(user);
+    return <Profile list={user.items} />;
   }
 }
-const mapStateToProps = state => ({
-  isLoading: state.profile.isLoading,
-  user: state.profile.items,
-  error: state.profile.error
-});
-export default connect(mapStateToProps)(ProfileContainer);
+const fetchUser = gql`
+  query getUser($id: ID) {
+    user(id: $id) {
+      bio
+      email
+      fullname
+      borroweditems {
+        id
+      }
+      shareditems {
+        id
+        title
+        imageurl
+        description
+        available
+        created
+        tags {
+          title
+        }
+        borrower {
+          id
+          fullname
+        }
+        itemowner {
+          id
+          bio
+          email
+          fullname
+        }
+      }
+    }
+  }
+`;
+export default graphql(fetchUser, {
+  options: ownProps => ({
+    variables: {
+      id: ownProps.match.params.userid
+    }
+  })
+})(ProfileContainer);

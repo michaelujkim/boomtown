@@ -1,10 +1,17 @@
 const fetch = require("node-fetch");
-const jsonResource = require("./resources/jsonResource");
+
 const postgresResource = require("./resources/postgresResource");
 const firebaseResource = require("./resources/firebaseResource");
 module.exports = ({
-  jsonResource: { getUsers, getUser, getSharedItems },
-  postgresResource: { getItem, getItems, createItems, getTags, updateItems }
+  postgresResource: {
+    getItem,
+    getItems,
+    createItems,
+    getTags,
+    updateItems,
+    getSharedItems
+  },
+  firebaseResource: { getUser, getUsers }
 }) => {
   //resolvers go here
 
@@ -42,7 +49,7 @@ module.exports = ({
     },
     User: {
       shareditems(user) {
-        return sharedItems(`?itemowner=${user.id}`);
+        return getSharedItems(user.id);
       },
       items: (user, args, context) => {
         return context.loaders.getAllItems.load(user.id);

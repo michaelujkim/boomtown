@@ -9,7 +9,7 @@ const config = require("./config");
 const { makeExecutableSchema } = require("graphql-tools");
 
 config(app);
-const jsonResource = require("./api/resources/jsonResource")(app);
+
 const postgresResource = require("./api/resources/postgresResource");
 const firebaseResource = require("./api/resources/firebaseResource")(app);
 postgresResource(app).then(pgResource => start(pgResource));
@@ -17,8 +17,8 @@ function start(postgresResource) {
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers: initResolvers({
-      jsonResource,
-      postgresResource
+      postgresResource,
+      firebaseResource
     })
   });
 
