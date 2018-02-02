@@ -8,6 +8,7 @@ input AddItemInput{
   imageurl: String
   title: String
   description: String
+  itemowner: ID 
   tags:[TagInput]
 }
 input UpdateItemInput{
@@ -52,7 +53,7 @@ type Item{
   }
  
   type Mutation{
-    addItem(newItem:AddItemInput):Item
+    createNewItem(newItem:AddItemInput):Item
     updateItem(currentItem:UpdateItemInput):Item
     borrowItem(currentItem:BorrowItemInput):Item
   }

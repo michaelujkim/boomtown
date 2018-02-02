@@ -6,7 +6,7 @@ module.exports = ({
   postgresResource: {
     getItem,
     getItems,
-    createItems,
+    createItem,
     getTags,
     updateItems,
     getSharedItems
@@ -57,10 +57,9 @@ module.exports = ({
     },
 
     Mutation: {
-      addItem(root, { newItem: { title } }) {
-        // save this new item in the database!
-        // must return new item type, thanks to our mutation schema
-        return { title };
+      createNewItem(root, { newItem }) {
+        console.log(newItem);
+        return createItem(newItem);
       },
       updateItem(root, { currentItem: { title } }) {
         return { title };

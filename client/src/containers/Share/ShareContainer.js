@@ -1,7 +1,7 @@
 import React, {Component} from React;
 import Share from './Share'
-export default class Share extends Component{
+export default class ShareContainer extends Component{
   render(){
-    return <div> not found</div>;
+    return <Share />;
   }
 }
