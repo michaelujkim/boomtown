@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import HeaderBar from "../HeaderBar";
 import "./styles.css";
 import { connect } from "react-redux";
+import FlatButton from "material-ui/FlatButton";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const Layout = ({ children, userLoading, authenticated }) =>
   userLoading ? (
@@ -11,7 +13,9 @@ const Layout = ({ children, userLoading, authenticated }) =>
     <div className="appContentWrapper">
       <div className="appHeader">{authenticated && <HeaderBar />}</div>
       <div className="appContent">{children}</div>
-      {/* And a footer here, but not on the login route... */}
+      <div className="appFooter">
+        <Link to={`/share`}>share</Link>
+      </div>
     </div>
   );
 
