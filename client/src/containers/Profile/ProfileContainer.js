@@ -13,8 +13,8 @@ class ProfileContainer extends Component {
   // }
   render() {
     const { loading, user } = this.props.data;
-    console.log(user);
-    return <Profile list={user.items} />;
+    console.log(this.props.data);
+    return <Profile list={this.props.data.items} />;
   }
 }
 const fetchUser = gql`
@@ -51,9 +51,9 @@ const fetchUser = gql`
   }
 `;
 export default graphql(fetchUser, {
-  options: ownProps => ({
+  options: ({ match }) => ({
     variables: {
-      id: ownProps.match.params.userid
+      id: match.params.userid
     }
   })
 })(ProfileContainer);

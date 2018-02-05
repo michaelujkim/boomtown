@@ -4,7 +4,7 @@ import HeaderBar from "../HeaderBar";
 import "./styles.css";
 import { connect } from "react-redux";
 import FlatButton from "material-ui/FlatButton";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link, withRouter } from "react-router-dom";
 
 const Layout = ({ children, userLoading, authenticated }) =>
   userLoading ? (
@@ -31,4 +31,4 @@ const mapStateToProps = state => ({
   authenticated: state.auth.authenticated
 });
 
-export default connect(mapStateToProps)(Layout);
+export default withRouter(connect(mapStateToProps)(Layout));

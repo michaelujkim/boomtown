@@ -78,7 +78,7 @@ class HeaderBar extends Component {
             </NavLink>
 
             <NavLink style={style.Blackbutton} to="/login">
-              Login
+              Logout
             </NavLink>
           </div>
         }
